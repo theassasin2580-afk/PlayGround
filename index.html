@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f6f8fb" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23153e37'/%3E%3Cpath d='m6 22 7-8 5 4 8-11m-7 0h7v7' fill='none' stroke='%239cf3ce' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <title>MarketLab — TheAnalyzerZ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="MarketLab home"><span class="brand-mark"><svg viewBox="0 0 24 24"><path d="M3 17.5 8.2 12l3.6 3.2L20.8 6M15.5 6h5.3v5.3"/></svg></span><span>market<span class="brand-light">lab</span></span></a>
+      <div class="top-divider"></div>
+      <div class="market-heading"><span class="instrument-icon">NQ</span><div><strong>NASDAQ 100</strong><small>Micro E-mini Futures · CME</small></div><span class="star">★</span></div>
+      <div class="market-price"><strong id="top-price">18,742.50</strong><span id="top-change" class="positive">+0.00 (0.00%)</span></div>
+      <div class="top-spacer"></div>
+      <div class="market-open"><i></i> MARKET OPEN <span>·</span> SIMULATED</div>
+      <button class="icon-button" id="sound-toggle" title="Toggle sound" aria-label="Toggle sound"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5ZM15.5 8.5a5 5 0 0 1 0 7M18 5a9 9 0 0 1 0 14"/></svg></button>
+      <button class="avatar" title="Owner profile">AZ</button>
+    </header>
+
+    <main class="workspace">
+      <aside class="left-rail">
+        <button class="rail-button active" aria-label="Chart"><svg viewBox="0 0 24 24"><path d="M4 19V5m0 14h16M8 16v-5m4 5V7m4 9v-7m4 10V4"/></svg></button>
+        <button class="rail-button" id="focus-trades" aria-label="Positions"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18" cy="17" r="3"/></svg></button>
+        <div class="rail-spacer"></div><span class="rail-label">PAPER</span>
+      </aside>
+
+      <section class="main-column">
+        <div class="chart-card">
+          <div class="chart-toolbar">
+            <div class="chart-title"><span class="instrument-icon small">NQ</span><div><strong>NASDAQ 100</strong><span class="ticker"> · NQ1! <b class="live-dot"></b></span></div></div>
+            <div class="timeframes"><button class="timeframe active">1m</button><button class="timeframe">5m</button><button class="timeframe">15m</button><span class="toolbar-separator"></span><button class="tool-button" title="Candlestick chart"><svg viewBox="0 0 24 24"><path d="M7 3v18m-3-7h6M17 3v18m-3-12h6"/></svg><span>Candles</span><i class="chevron"></i></button></div>
+            <div class="chart-actions"><button class="tool-button" id="reset-chart" title="Reset chart view"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 2.64-6.36L3 8m0-5v5h5"/></svg></button><button class="tool-button" id="fullscreen" title="Fullscreen"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></div>
+          </div>
+          <div class="chart-subtoolbar"><span id="ohlc-line">O 18,742.50&nbsp;&nbsp; H 18,742.50&nbsp;&nbsp; L 18,742.50&nbsp;&nbsp; C 18,742.50</span><span class="chart-live"><i></i> LIVE</span></div>
+          <div class="chart-wrap" id="chart-wrap"><canvas id="chart" aria-label="Live simulated NASDAQ candlestick chart"></canvas><div class="chart-tooltip" id="chart-tooltip"></div><div class="chart-watermark">NQ <span>NASDAQ 100</span></div><div class="chart-time-label" id="chart-time">1m · LIVE</div></div>
+          <div class="chart-footer"><span><b class="tiny-clock"></b><span id="exchange-time">09:30:00</span> ET</span><span class="footer-center">All prices and trades are simulated</span><span class="chart-footer-right">Auto scale <i class="toggle on"></i></span></div>
+        </div>
+
+        <section class="positions-card" id="positions-section">
+          <div class="section-heading"><div><h2>Positions</h2><span class="count-pill" id="position-count">0</span></div><button class="text-button" id="close-all" disabled>Close all</button></div>
+          <div class="positions-head"><span>INSTRUMENT</span><span>SIZE</span><span>ENTRY PRICE</span><span>MARK PRICE</span><span>UNREALIZED P&amp;L</span><span></span></div>
+          <div id="position-list" class="position-list"><div class="empty-state"><span class="empty-icon">↗</span><div><strong>No open positions</strong><span>Place a buy or sell order to get started.</span></div></div></div>
+        </section>
+
+        <section class="activity-card">
+          <div class="section-heading"><div><h2>Recent activity</h2><span class="muted-count" id="trade-count">0 trades</span></div><button class="text-button" id="clear-history">Clear history</button></div>
+          <div id="activity-list" class="activity-list"><div class="activity-empty">Your completed trades will show up here.</div></div>
+        </section>
+      </section>
+
+      <aside class="right-panel">
+        <div class="account-card"><div class="account-head"><div><span class="eyebrow">PAPER ACCOUNT</span><span class="account-status"><i></i> Active</span></div><button class="more-button" aria-label="Account options">···</button></div><div class="owner-badge"><span class="owner-avatar">AZ</span><span><strong>TheAnalyzerZ</strong><small>Owner account</small></span><span class="owner-crown">✦</span></div><div class="balance-label">ACCOUNT BALANCE <button class="info-dot" title="Starting balance is $2,000. Owner mode provides unlimited simulated buying power.">i</button></div><div class="balance-value" id="balance">$2,000.00</div><div class="account-metrics"><div><span>UNREALIZED P&amp;L</span><strong id="unrealized" class="neutral">$0.00</strong></div><div><span>NET LIQUIDATION</span><strong id="equity">$2,000.00</strong></div></div><div class="buying-power"><span>BUYING POWER</span><strong>∞ <small>UNLIMITED</small></strong></div></div>
+
+        <div class="order-card"><div class="order-card-heading"><div><span class="eyebrow">PLACE ORDER</span><h2>Trade NQ</h2></div><button class="help-button" title="Orders are simulated. P&L: index move × (points ÷ 1,000) × $10.">?</button></div><div class="quote-row"><div><span>MARKET PRICE</span><strong id="order-price">18,742.50</strong></div><div class="spread"><span>MARKET</span><strong>0.25</strong></div></div>
+          <div class="field-label-row"><label for="size-input">Order size</label><span>POINTS</span></div><div class="size-control"><button id="size-minus" aria-label="Decrease order size">−</button><input id="size-input" type="number" min="1" step="100" value="1000" inputmode="numeric"/><span>pts</span><button id="size-plus" aria-label="Increase order size">+</button></div><div class="quick-sizes"><button data-size="500">500</button><button class="selected" data-size="1000">1,000</button><button data-size="2500">2,500</button><button data-size="5000">5,000</button></div><div class="size-explainer"><span class="info-mini">i</span><span><b>1,000 points = $10</b> per 1.0 index move</span></div>
+          <div class="order-preview"><span>Est. value per 1.0 move</span><strong id="preview-value">$10.00</strong></div><div class="order-buttons"><button class="trade-button buy-button" id="buy-button"><span>BUY / LONG</span><small>at market</small><kbd>B</kbd></button><button class="trade-button sell-button" id="sell-button"><span>SELL / SHORT</span><small>at market</small><kbd>S</kbd></button></div><div class="owner-note"><span>✦</span> Owner mode · unlimited buying power</div><div class="impact-note">Your orders move the market · 1,000 pts ≈ 10 index points</div></div>
+
+        <div class="mode-card"><div class="mode-title"><div><span class="eyebrow">MARKET BEHAVIOR</span><h3>Movement mode</h3></div><span class="live-badge"><i></i> LIVE</span></div><div class="mode-options"><button class="mode-option active" data-mode="normal"><span class="mode-icon normal-icon"><svg viewBox="0 0 24 24"><path d="m3 16 5-5 4 3 8-8"/><path d="M15 6h5v5"/></svg></span><span><b>Regular</b><small>Natural price action</small></span><span class="radio"></span></button><button class="mode-option" data-mode="volatile"><span class="mode-icon volatile-icon"><svg viewBox="0 0 24 24"><path d="m3 16 4-9 4 12 4-14 3 10 3-6"/></svg></span><span><b>Volatile</b><small>High-energy swings</small></span><span class="radio"></span></button></div><div class="mode-foot"><span>Simulation speed</span><button id="pause-button"><span class="pause-symbol">Ⅱ</span> Pause</button></div></div>
+
+        <div class="disclaimer"><span>ⓘ</span><p>Practice only. This is a market simulation — no real money or live market data is used.</p></div>
+      </aside>
+    </main>
+    <footer class="statusbar"><span><i class="status-green"></i> SIMULATOR CONNECTED</span><span>NASDAQ 100 <b>·</b> 1-minute chart</span><span class="status-right">MarketLab <b>v1.0</b> <span>·</span> Built for <strong>TheAnalyzerZ</strong></span></footer>
+    <div class="toast-region" id="toast-region" aria-live="polite"></div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
